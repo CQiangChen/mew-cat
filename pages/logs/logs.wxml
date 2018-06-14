@@ -1,0 +1,11 @@
+<!--pages/logs/logs.wxml-->
+<view class='items-pro' wx:for="{{proList}}">
+  <view class='pro-body'>
+    <view class='pro-title'>
+      <view class='pro-title-cname'>{{item.cname}}</view>
+      <view class='pro-title-time'>{{item.time}}</view>
+      <view class='pro-title-pname'>{{item.pname}}</view>
+    </view>
+    <image src='{{item.img}}'></image>
+  </view>
+</view>

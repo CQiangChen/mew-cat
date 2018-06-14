@@ -1,0 +1,25 @@
+/* pages/logs/logs.wxss */
+page{
+-webkit-overflow-scrolling: touch;
+}
+.items-pro{
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content:center;
+  align-items: center;
+}
+
+.items-pro .pro-body{
+  position: relative;
+}
+
+.items-pro .pro-body .pro-title{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content:center;
+  align-items: center;
+}
