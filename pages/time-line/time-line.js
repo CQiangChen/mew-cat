@@ -1,78 +1,52 @@
-// pages/my/my.js
-Page({
+let
+  startPageY = 0,
+  lastPageY;
 
-  /**
-   * 页面的初始数据
-   */
+Page({
   data: {
     userInfo: {},
-    arrData:[
-      { 'time': '5月2号·下午3:20', 'text': '老子今天心情不是很好，别惹我。', 'image': [ '../../img/dtu1.png','../../img/dtu2.png']},
-      { 'time': '5月2号·下午3:20', 'text': '老子今天心情不是很好，别惹我。', 'image': ['../../img/dtu3.png',] },
-     
-
+    arrData: [
+      {'time': '5月2号·下午3:20', 'text': '老子今天心情不是很好，别惹我。', 'image': ['../../img/dtu1.png', '../../img/dtu2.png']},
+      {'time': '5月2号·下午3:20', 'text': '老子今天心情不是很好，别惹我。', 'image': ['../../img/dtu3.png',]},
+      {'time': '5月2号·下午3:20', 'text': '老子今天心情不是很好，别惹我。', 'image': ['../../img/dtu3.png',]},
     ],
-   auto:{},
-   open: false,
-   //起点
-   mark: 0,
-   //终点
-   newmark: 0,
-   //开关
-   istoright: false
+    auto: {},
+    open: false,
   },
-  tap_start: function (res) {
-    // console.log(res);
-    // console.log(res.touches[0].pageX);
-    this.data.mark = this.data.newmark = res.touches[0].pageY;
-    console.log('起点', this.data.mark, this.data.newmark)
 
+  tapStart: function (res) {
+    startPageY = res.touches[0].pageY
   },
-  //利用bindtouchmove判断移动方向
-  tap_drag: function (res) {
-    var that = this;
-    console.log('终点', res.touches[0].pageY);
-    //向下
-    that.data.newmark = res.touches[0].pageY;
-    if (that.data.mark < that.data.newmark) {
-      that.data.istoright = true;
-    }
-    if (that.data.mark > that.data.newmark) {
-      that.data.istoright = false;
-    }
 
-    // console.log(that.data.istoright);
+  tapDrag: function (res) {
+    lastPageY = res.touches[0].pageY
   },
+
   //进行对开关的判断
-  tap_end: function () {
-    var that = this;
-    if (that.data.istoright) {
-      that.setData({
-        open: true
-      })
-    } else {
-      that.setData({
+  tapEnd: function () {
+    let scrollUp = lastPageY < startPageY;
+
+    if (this.data.open && scrollUp) {
+      this.setData({
         open: false
       })
     }
-    console.log(that.data.open)
-  },
-  onReady() {
 
-    wx.getUserInfo({
-      success: res => {
-        console.log(res)
-        this.setData({
-          userInfo: res.userInfo
-        })
-      }
-    });
+    if (!this.data.open && !scrollUp) {
+      // api usage: https://developers.weixin.qq.com/miniprogram/dev/api/wxml-nodes-info.html#wxcreateselectorquery
+      wx.createSelectorQuery().select('.page-top').boundingClientRect(r => {
+        if (r.top === 0) {
+          this.setData({
+            open: true
+          })
+        }
+      }).exec();
+    }
   },
- 
+
   imageLoad: function (e) {
     console.log(e);
-    var _this = this;
-    var $width = e.detail.width,    //获取图片真实宽度  
+    var $width = e.detail.width,    //获取图片真实宽度
       $height = e.detail.height,
       ratio = $width / $height;   //图片的真实宽高比例  
     var viewWidth = '',           //设置图片显示宽度，  
@@ -84,13 +58,13 @@ Page({
       }
     });
     var image = this.data.auto;
-    image[e.target.dataset.index]={
+    image[e.target.dataset.index] = {
       width: viewWidth,
       height: viewHeight
-    } 
+    }
     this.setData({
-      auto:image
+      auto: image
     })
-  }  
+  }
 
 })
