@@ -36,7 +36,7 @@
     <image class='page-img' src='/images/head.jpg'></image>
   </view>
 
-   <view class="page-top {{open ? 'c-stare1':''}}" bindtouchstart='tap_start' bindtouchmove='tap_drag' bindtouchend='tap_end' bindtap='tap_cl'>  
+   <view class="page-top {{open ? 'c-stare1':''}}" bindtouchstart='tapStart' bindtouchmove='tapDrag' bindtouchend='tapEnd'>
       <view class='conter'>
         <view class='message'>
           <image class='userinfo-avatar' src='{{userInfo.avatarUrl}}' style='width:40px;height:40px;' mode='aspectFit'></image>
